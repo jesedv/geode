@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Geode — Online Test</title>
+  </head>
+  <body class="bg-slate-50 text-slate-800">
+    <div class="max-w-3xl mx-auto p-6">
+      <header class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">Geode — Online tester</h1>
+        <a href="/" class="text-sky-600">Home</a>
+      </header>
+
+      <main class="bg-white rounded shadow p-6">
+        <label class="block mb-2 font-medium">Polynomial coefficients (comma-separated, lowest→highest)</label>
+        <input id="coeffs" class="w-full border rounded p-2 mb-3" value="1, -3, 0, 2" />
+
+        <label class="block mb-2 font-medium">Evaluate at x (integer or a/b)</label>
+        <input id="xval" class="w-full border rounded p-2 mb-3" value="2" />
+
+        <div class="flex gap-3 mb-4">
+          <button id="evalBtn" class="bg-sky-600 text-white px-4 py-2 rounded">Evaluate</button>
+          <button id="derivBtn" class="bg-amber-600 text-white px-4 py-2 rounded">Derivative</button>
+          <button id="latexBtn" class="bg-violet-600 text-white px-4 py-2 rounded">Show LaTeX</button>
+        </div>
+
+        <div id="out" class="whitespace-pre-wrap text-sm text-slate-700"></div>
+
+        <hr class="my-4" />
+        <h3 class="font-semibold">Examples</h3>
+        <select id="examples" class="border rounded p-2 w-full mt-2 mb-4">
+          <option value="1, -3, 0, 2">2x^3 - 3x + 1</option>
+          <option value="0,0,1,0,-5">x^4 - 5</option>
+          <option value="1,0,0,0,0,1">x^5 + 1</option>
+        </select>
+      </main>
+    </div>
+
+    <script>
+      // Minimal BigInt-backed rational Fraction class
+      class Fraction {
+        constructor(num, den = 1n) {
+          if (typeof num === 'bigint') this.n = num; else this.n = BigInt(num);
+          if (typeof den === 'bigint') this.d = den; else this.d = BigInt(den);
+          if (this.d < 0n) { this.n = -this.n; this.d = -this.d; }
+          this._norm();
+        }
+        static fromString(s) {
+          if (s.includes('/')) {
+            const [a,b] = s.split('/').map(t => t.trim());
+            return new Fraction(BigInt(a), BigInt(b));
+          }
+          return new Fraction(BigInt(s));
+        }
+        _gcd(a,b){ a=a<0n?-a:a; b=b<0n?-b:b; while(b){ [a,b]=[b,a%b] } return a }
+        _norm(){ const g = this._gcd(this.n, this.d); if (g>1n){ this.n/=g; this.d/=g } }
+        add(r){ return new Fraction(this.n*r.d + r.n*this.d, this.d*r.d) }
+        sub(r){ return new Fraction(this.n*r.d - r.n*this.d, this.d*r.d) }
+        mul(r){ return new Fraction(this.n*r.n, this.d*r.d) }
+        div(r){ return new Fraction(this.n*r.d, this.d*r.n) }
+        toString(){ return (this.d===1n)? this.n.toString() : (this.n.toString() + '/' + this.d.toString()) }
+        toNumber(){ return Number(this.n)/Number(this.d) }
+      }
+
+      function parseCoeffs(s){
+        return s.split(',').map(tok=>tok.trim()).filter(Boolean).map(t=>Fraction.fromString(t));
+      }
+
+      function evalPoly(coeffs, x){
+        // Horner from highest
+        let acc = new Fraction(0n,1n);
+        for(let i=coeffs.length-1;i>=0;--i){ acc = acc.mul(x).add(coeffs[i]); }
+        return acc;
+      }
+
+      function derivativeCoeffs(coeffs){
+        if (coeffs.length<=1) return [new Fraction(0n,1n)];
+        const out = [];
+        for(let i=1;i<coeffs.length;i++){
+          out.push(coeffs[i].mul(new Fraction(BigInt(i))));
+        }
+        return out;
+      }
+
+      function polyToLaTeX(coeffs){
+        const terms = [];
+        for(let i=coeffs.length-1;i>=0;i--){
+          const c = coeffs[i].toString();
+          if (c==='0') continue;
+          let term = '';
+          if (i===0) term = `${c}`;
+          else if (i===1) term = `${c} x`;
+          else term = `${c} x^{${i}}`;
+          terms.push(term);
+        }
+        return terms.join(' + ') || '0';
+      }
+
+      const coeffsInput = document.getElementById('coeffs');
+      const xInput = document.getElementById('xval');
+      const out = document.getElementById('out');
+      const evalBtn = document.getElementById('evalBtn');
+      const derivBtn = document.getElementById('derivBtn');
+      const latexBtn = document.getElementById('latexBtn');
+      const examples = document.getElementById('examples');
+
+      examples.addEventListener('change', ()=>{ coeffsInput.value = examples.value; out.textContent=''; });
+
+      evalBtn.addEventListener('click', ()=>{
+        try{
+          const coeffs = parseCoeffs(coeffsInput.value);
+          const x = Fraction.fromString(xInput.value.trim());
+          const v = evalPoly(coeffs, x);
+          out.textContent = `P(${x.toString()}) = ${v.toString()} (≈ ${v.toNumber()})`;
+        }catch(e){ out.textContent = 'Error: '+e.message }
+      });
+
+      derivBtn.addEventListener('click', ()=>{
+        try{
+          const coeffs = parseCoeffs(coeffsInput.value);
+          const d = derivativeCoeffs(coeffs);
+          out.textContent = 'Derivative coefficients (lowest→highest):\n' + d.map(f=>f.toString()).join(', ') + '\n\nAs polynomial:\n' + polyToLaTeX(d);
+        }catch(e){ out.textContent = 'Error: '+e.message }
+      });
+
+      latexBtn.addEventListener('click', ()=>{
+        try{
+          const coeffs = parseCoeffs(coeffsInput.value);
+          out.textContent = 'LaTeX:\n\\( ' + polyToLaTeX(coeffs) + ' \\)';
+        }catch(e){ out.textContent = 'Error: '+e.message }
+      });
+    </script>
+  </body>
+</html>

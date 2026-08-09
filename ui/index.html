@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Geode — Hyper-Catalan Polynomial Solver</title>
+  </head>
+  <body class="bg-slate-50 text-slate-800">
+    <div class="max-w-4xl mx-auto p-6">
+      <header class="flex items-center justify-between mb-8">
+        <h1 class="text-4xl font-extrabold">Geode</h1>
+        <div class="space-x-3">
+          <a href="https://github.com/<your-user>/geode" target="_blank" class="inline-block bg-sky-600 text-white px-4 py-2 rounded shadow">GitHub</a>
+          <a href="/ui/test.html" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded shadow">Try online</a>
+        </div>
+      </header>
+
+      <section class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-2">Hyper-Catalan series solver for univariate polynomials</h2>
+        <p class="text-slate-600 mb-4">Exact-rational closed-form solutions (via Hyper-Catalan series). Produce rational expressions, truncate for approximations, and export results as LaTeX.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="font-medium">Use cases</h3>
+            <ul class="list-disc pl-5 text-slate-600">
+              <li>Game physics: cloth, curve intersections</li>
+              <li>Computer graphics: polynomial surfaces</li>
+              <li>Symbolic CAS integrations</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium">Open source</h3>
+            <p class="text-slate-600">Free MIT license. Contributions welcome — open issues and PRs on GitHub.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-3">Quick start</h3>
+        <ol class="list-decimal pl-5 text-slate-600">
+          <li>Clone: <code>git clone https://github.com/&lt;your-user&gt;/geode.git</code></li>
+          <li>Run tests: <code>cargo test --workspace</code></li>
+          <li>Serve UI: <code>cd ui && npx serve .</code> then open <code>http://localhost:5000</code></li>
+        </ol>
+      </section>
+
+      <footer class="mt-6 text-sm text-slate-500">License: MIT — Made with Rust + WASM + TypeScript. See <a href="/docs/index.md" class="text-sky-600">docs</a>.</footer>
+    </div>
+  </body>
+</html>

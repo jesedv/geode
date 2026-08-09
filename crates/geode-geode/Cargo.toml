@@ -1,0 +1,7 @@
+[package]
+name = "geode-geode"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+geode-poly = { path = "../geode-poly" }

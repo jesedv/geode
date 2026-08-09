@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+CMD=${1:-help}
+case $CMD in
+  start|s)  echo "No dev server configured. Open ui/index.html or run: (cd ui && npx serve .)" ;;
+  build|b)  cargo build --workspace --release ;;
+  test|t)   cargo test ;;
+  clean)    rm -rf target ui/node_modules ui/dist ;;
+  *)        echo "Usage: ./scripts/dev [start|build|test|clean]" ;;
+esac

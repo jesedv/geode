@@ -1,0 +1,14 @@
+{
+  "name": "geode-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf public/pkg && cp -r pkg public/ && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
