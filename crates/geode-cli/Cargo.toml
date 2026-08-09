@@ -1,0 +1,13 @@
+[package]
+name = "geode-cli"
+version = "0.1.0"
+edition = "2021"
+description = "CLI for geode polynomial solver"
+
+[[bin]]
+name = "geode"
+path = "src/main.rs"
+
+[dependencies]
+geode-poly = { path = "../geode-poly" }
+clap = { version = "4", features = ["derive"] }

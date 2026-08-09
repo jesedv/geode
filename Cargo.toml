@@ -1,10 +1,11 @@
 [workspace]
 members = [
-  "crates/geode-poly",
-  "crates/geode-catalan",
-  "crates/geode-series",
-  "crates/geode-solver",
-  "crates/geode-simplify",
-  "crates/geode-geode",
-  "crates/geode-wasm",
+    "crates/geode-poly",
+    "crates/geode-catalan",
+    "crates/geode-series",
+    "crates/geode-solver",
+    "crates/geode-simplify",
+    "crates/geode-geode",
+    "crates/geode-wasm",
+    "crates/geode-cli",
 ]
