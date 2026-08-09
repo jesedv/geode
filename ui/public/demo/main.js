@@ -110,20 +110,13 @@ function wireUp() {
     });
   });
 
-  el("kink-form").addEventListener("submit", (e) => {
+  el("eval-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    const a = parseFloat(el("kink-a").value);
-    const b = parseFloat(el("kink-b").value);
-    try {
-      const kinks = geode.detect_abs_kinks(a, b, 1000);
-      if (kinks.length === 0) {
-        el("kink-out").textContent = `No kinks found in [${a}, ${b}]`;
-      } else {
-        el("kink-out").textContent = `Kinks detected:\n${kinks.map(x => `  x = ${x}  (|x| has subgradient [-1, 1])`).join("\n")}`;
-      }
-    } catch {
-      el("kink-out").textContent = "WASM not loaded yet";
-    }
+    const coeffs = parseCoeffs(el("coeffs").value);
+    const x = parseFloat(el("eval-x").value);
+    if (coeffs.length < 2 || isNaN(x)) return;
+    const result = polyEval(coeffs, x);
+    el("eval-out").textContent = `f(${x}) = ${result}\n\nPolynomial: ${formatPoly(coeffs)}`;
   });
 }
 

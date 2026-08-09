@@ -53,16 +53,15 @@
   </div>
 </section>
 
-<section class="card" id="kinks-card">
-  <h2>Kink detection (|x|)</h2>
-  <p>Find the kink of <code>|x|</code> in an interval using Clarke subgradient analysis.</p>
-  <form id="kink-form" class="row">
-    <input id="kink-a" type="number" value="-2" step="0.1" style="width:6rem" />
-    <span class="muted">to</span>
-    <input id="kink-b" type="number" value="2" step="0.1" style="width:6rem" />
-    <button type="submit">detect</button>
+<section class="card" id="eval-card">
+  <h2>Polynomial evaluator</h2>
+  <p>Evaluate a polynomial at a specific point.</p>
+  <form id="eval-form" class="row">
+    <label class="muted">x =</label>
+    <input id="eval-x" type="number" value="2" step="0.1" style="width:6rem" />
+    <button type="submit">evaluate</button>
   </form>
-  <pre id="kink-out"></pre>
+  <pre id="eval-out"></pre>
 </section>
 
 </main>
