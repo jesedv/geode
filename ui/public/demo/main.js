@@ -3,7 +3,7 @@ import init, * as geode from "../pkg/geode_wasm.js";
 async function main() {
   await init(new URL("../pkg/geode_wasm_bg.wasm", import.meta.url));
   document.getElementById("meta").textContent =
-    `geode v${geode.version()} · WASM loaded`;
+    `geode · WASM loaded (${geode.hello()})`;
   wireUp();
 }
 
