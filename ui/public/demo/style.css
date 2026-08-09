@@ -1,0 +1,25 @@
+:root{--bg:#0a0a0a;--fg:#e4e4e7;--muted:#71717a;--accent:#a78bfa;--card:#18181b;--border:#27272a;--code-bg:#09090b;--ok:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+header{border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;background:var(--bg)}
+.hdr-inner{max-width:960px;margin:0 auto;padding:.6rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:700;font-size:1.05rem;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:1.2rem}nav a{color:var(--muted);font-size:.85rem;text-decoration:none}nav a:hover{color:var(--fg)}
+main{max-width:960px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;gap:1.25rem}
+.hero-card{background:linear-gradient(135deg,var(--card),#1e1b4b);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center}
+.hero-card h1{font-size:1.8rem;font-weight:700;margin-bottom:.4rem}
+.sm{font-size:.8rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem}
+.card h2{font-size:1rem;font-weight:600;margin-bottom:.3rem}.card p{color:var(--muted);font-size:.9rem;margin-bottom:.75rem}
+.row{display:flex;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap;align-items:center}
+input[type="text"],input[type="number"]{background:var(--code-bg);color:var(--fg);border:1px solid var(--border);border-radius:8px;padding:.4rem .7rem;font-family:inherit;font-size:.9rem;width:14rem;outline:none}
+input:focus{border-color:var(--accent)}
+button{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:8px;padding:.4rem 1rem;font-family:inherit;font-size:.9rem;cursor:pointer;transition:border-color .15s}
+button:hover{border-color:var(--accent)}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;overflow-x:auto;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:.82rem;line-height:1.6;white-space:pre-wrap}
+code{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:.88em;background:var(--code-bg);border:1px solid var(--border);border-radius:4px;padding:.1em .35em}
+.examples{display:flex;flex-wrap:wrap;gap:.5rem}
+.ex{background:var(--code-bg);font-size:.8rem;padding:.35rem .8rem}
+label{font-size:.85rem}
+footer{max-width:960px;margin:0 auto;padding:1.5rem;text-align:center;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border)}
+footer a{color:var(--accent);text-decoration:none}
