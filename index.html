@@ -3,9 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geode — solve any polynomial, exact, in your browser</title>
-  <meta name="description" content="Hyper-Catalan polynomial solver. Exact rational arithmetic, no radicals, no numerics. Quintics and beyond." />
-  <link rel="icon" href="/ui/public/favicon.svg" type="image/svg+xml" />
+  <title>geode — Exact Polynomial Solver | Hyper-Catalan Series in Rust + WASM</title>
+  <meta name="description" content="Solve any polynomial equation with exact rational arithmetic. Hyper-Catalan series — no radicals, no numerics, no complex numbers. Open source Rust + WASM. Try it live." />
+  <meta name="keywords" content="polynomial solver, exact arithmetic, Hyper-Catalan, Rust, WASM, quintic equation, closed-form solution, computer algebra" />
+  <meta property="og:title" content="geode — Exact Polynomial Solver" />
+  <meta property="og:description" content="Solve any polynomial with exact rational arithmetic. Hyper-Catalan series — no radicals, no numerics." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://geode.jesed.dev" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="geode — Exact Polynomial Solver" />
+  <meta name="twitter:description" content="Solve any polynomial with exact rational arithmetic. Hyper-Catalan series in Rust + WASM." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://geode.jesed.dev" />
   <style>
     :root{--bg:#0a0a0a;--fg:#e4e4e7;--muted:#71717a;--accent:#a78bfa;--accent2:#60a5fa;--card:#18181b;--border:#27272a;--code-bg:#09090b}
     *{box-sizing:border-box;margin:0;padding:0}
@@ -26,6 +35,7 @@
     section{padding:4rem 0}section h2{font-size:1.8rem;font-weight:700;margin-bottom:1.5rem;letter-spacing:-.02em}
     .features{background:var(--code-bg)}
     .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
     .card h3{font-size:1rem;margin-bottom:.4rem}.card p{color:var(--muted);font-size:.9rem}
     .link-card{transition:border-color .15s;cursor:pointer}.link-card:hover{border-color:var(--accent);text-decoration:none}
@@ -40,38 +50,56 @@
     .tab-content pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1rem;overflow-x:auto;font-size:.85rem}
     .tab-content pre code{border:none;padding:0;background:none}
     footer{border-top:1px solid var(--border);padding:2rem 0;color:var(--muted);font-size:.85rem;text-align:center}
-    nav{margin-bottom:0}
-    nav a{color:var(--muted);font-size:.85rem;margin-left:1.2rem}nav a:hover{color:var(--fg)}
     .hdr{display:flex;justify-content:space-between;align-items:center;max-width:960px;margin:0 auto;padding:1rem 1.5rem;border-bottom:1px solid var(--border)}
     .logo{font-weight:700;font-size:1.1rem;color:var(--accent);text-decoration:none}
+    nav a{color:var(--muted);font-size:.85rem;margin-left:1.2rem}nav a:hover{color:var(--fg)}
+    .edu{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:1.25rem}
+    .edu h3{font-size:1.1rem;margin-bottom:.75rem;color:var(--accent)}
+    .edu p,.edu li{color:var(--muted);font-size:.9rem;line-height:1.7}
+    .edu ul{padding-left:1.5rem;margin:.5rem 0}
+    .edu li{margin:.3rem 0}
+    .edu .highlight{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.85rem}
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "geode",
+    "description": "Solve any polynomial equation with exact rational arithmetic using Hyper-Catalan series",
+    "url": "https://geode.jesed.dev",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
 </head>
 <body>
 
 <div class="hdr">
   <a href="/" class="logo">⬡ geode</a>
   <nav>
-    <a href="/ui/public/demo/index.html">demo</a>
+    <a href="#learn">learn</a>
+    <a href="#install">install</a>
+    <a href="/ui/public/demo/">demo</a>
     <a href="https://github.com/jesedv/geode">github</a>
   </nav>
 </div>
 
 <section class="hero">
   <div class="container">
-    <div class="badge">open source · MIT / Apache-2.0</div>
+    <div class="badge">open source · MIT</div>
     <h1>geode</h1>
     <p class="tagline">Solve any polynomial with exact rational arithmetic.<br/>
     No radicals. No numerics. No complex numbers.</p>
     <div class="cta">
-      <a href="/ui/public/demo/index.html" class="btn primary">Try the solver</a>
+      <a href="/ui/public/demo/" class="btn primary">Try the solver</a>
       <a href="https://github.com/jesedv/geode" class="btn">GitHub</a>
-      <a href="#install" class="btn">Install</a>
+      <a href="#install" class="btn">Install CLI</a>
     </div>
-    <pre class="hero-code"><code>$ geode solve "x^5 - x + 1"
-x ≈ 0.75488 (depth 15, exact rational)
-
-$ geode solve "x^3 - 2" --format latex
-x = ∛2</code></pre>
+    <pre class="hero-code"><code>$ geode --coeffs "1, 0, 0, 0, -1, 1"
+Polynomial: x⁵ − x + 1
+Roots found: 1
+  x1 = -1.167303978261 (residual: 2.22e-16)</code></pre>
   </div>
 </section>
 
@@ -81,8 +109,56 @@ x = ∛2</code></pre>
     <div class="grid">
       <div class="card"><h3>200+ year gap, solved</h3><p>Since Abel–Ruffini (1824), nobody had a closed-form rational solution for quintics. Hyper-Catalan series changes that.</p></div>
       <div class="card"><h3>Exact rational arithmetic</h3><p>No floating point in the solver path. BigInt coefficients, BigRational arithmetic. Truncate at any depth.</p></div>
-      <div class="card"><h3>Works in your browser</h3><p>The solver compiles to WASM. Type a polynomial, get the answer. No server, no install, no account.</p></div>
+      <div class="card"><h3>Works in your browser</h3><p>Compiles to WASM. Type a polynomial, get the answer. No server, no install, no account.</p></div>
       <div class="card"><h3>Game physics, graphics, crypto</h3><p>Quintic equations in cloth sim, Bézier intersection, implicit surfaces, and cryptographic analysis.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="edu" id="learn">
+  <div class="container">
+    <h2>Learn: What is geode?</h2>
+
+    <div class="edu">
+      <h3>The Problem</h3>
+      <p>Since 1824, mathematicians knew that polynomials of degree 5 or higher cannot be solved with radicals (roots, square roots, etc.). This is the Abel–Ruffini theorem. For 200 years, the only options were:</p>
+      <ul>
+        <li><strong>Numerical methods</strong> (Newton's method) — give approximate answers, not exact</li>
+        <li><strong>CAS</strong> (Mathematica, SymPy) — return radicals when possible, fall back to numerical</li>
+        <li><strong>Bring–Jerrard</strong> — reduces to canonical form, still approximate</li>
+      </ul>
+    </div>
+
+    <div class="edu">
+      <h3>The Solution: Hyper-Catalan Series</h3>
+      <p>In 2024, Norman Wildberger and Dean Rubine discovered that the Hyper-Catalan series gives a <strong>closed-form rational solution</strong> to any univariate polynomial equation.</p>
+      <div class="highlight">
+        <code>x = Σₘ Cₘ · (a₁/a₀)^{m₁} · (a₂/a₀)^{m₂} · ...</code><br/><br/>
+        where <code>Cₘ</code> are Hyper-Catalan numbers counting polygon dissections.
+        Truncation at depth <code>d</code> gives <code>O(d)</code> correct digits.
+      </div>
+      <p>No radicals. No complex intermediates. Just exact rational arithmetic.</p>
+    </div>
+
+    <div class="edu">
+      <h3>Who is this for?</h3>
+      <div class="grid grid-2">
+        <div class="card"><h3>Game developers</h3><p>Quintic equations appear in cloth simulation, soft-body dynamics, and Bézier curve intersection. Get exact answers, not approximations.</p></div>
+        <div class="card"><h3>Graphics engineers</h3><p>Polynomial curves, surfaces, and ray-marching implicit surfaces all need polynomial solving. geode gives you exact rational roots.</p></div>
+        <div class="card"><h3>CAS developers</h3><p>A fundamental new method for computer algebra systems. Implement Hyper-Catalan series in your CAS for exact polynomial solving.</p></div>
+        <div class="card"><h3>Cryptographers</h3><p>Analyze polynomial-based cryptographic primitives (Rainbow, MAYO). Exact arithmetic prevents rounding attacks.</p></div>
+      </div>
+    </div>
+
+    <div class="edu">
+      <h3>How to use it</h3>
+      <p><strong>CLI:</strong> Install with one command, solve from the terminal.</p>
+      <div class="highlight">
+        <code>curl -sSf https://geode.jesed.dev/install.sh | sh</code><br/>
+        <code>geode --coeffs "1, 0, 0, 0, -1, 1"</code>
+      </div>
+      <p><strong>Web:</strong> Open the demo, type coefficients, see results instantly.</p>
+      <p><strong>Library:</strong> Use <code>geode-poly</code> in your Rust project for exact polynomial arithmetic.</p>
     </div>
   </div>
 </section>
@@ -104,12 +180,17 @@ x = ∛2</code></pre>
     <div class="tabs">
       <div class="tab active" onclick="showTab(this,'curl')">curl</div>
       <div class="tab" onclick="showTab(this,'cargo')">cargo</div>
+      <div class="tab" onclick="showTab(this,'wasm')">wasm</div>
     </div>
     <div id="tab-curl" class="tab-content active">
       <pre><code>curl -sSf https://geode.jesed.dev/install.sh | sh</code></pre>
     </div>
     <div id="tab-cargo" class="tab-content">
       <pre><code>cargo install geode-cli --git https://github.com/jesedv/geode.git</code></pre>
+    </div>
+    <div id="tab-wasm" class="tab-content">
+      <pre><code>wasm-pack build crates/geode-wasm --target web
+cd ui && npm install && npm run dev</code></pre>
     </div>
   </div>
 </section>
@@ -118,15 +199,16 @@ x = ∛2</code></pre>
   <div class="container">
     <h2>Resources</h2>
     <div class="grid">
-      <a href="/ui/public/demo/index.html" class="card link-card"><h3>Solver Playground</h3><p>Type any polynomial, see the Hyper-Catalan solution live.</p></a>
+      <a href="/ui/public/demo/" class="card link-card"><h3>Solver Playground</h3><p>Type any polynomial, see the solution live in WASM.</p></a>
       <a href="https://github.com/jesedv/geode" class="card link-card"><h3>GitHub</h3><p>Source code, issues, and the full math derivation.</p></a>
+      <a href="https://github.com/jesedv/geode/blob/main/docs/math.md" class="card link-card"><h3>The Math</h3><p>Wildberger–Rubine theory, convergence analysis, proofs.</p></a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <p>geode · <a href="https://jesed.dev">jesed.dev</a> · <a href="https://github.com/jesedv/geode">GitHub</a> · <a href="/ui/public/demo/index.html">Demo</a></p>
+    <p>geode · <a href="https://jesed.dev">jesed.dev</a> · <a href="https://github.com/jesedv/geode">GitHub</a> · <a href="/ui/public/demo/">Demo</a> · MIT License</p>
   </div>
 </footer>
 
