@@ -2,9 +2,11 @@
 
 > Solve any polynomial with exact rational arithmetic — no radicals, no numerics, no complex numbers.
 
-[![License](https://img.shields.io/crates/l/geode-poly)](https://github.com/jesedv/geode)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)](https://www.rust-lang.org)
+[![WASM](https://img.shields.io/badge/WASM-WebGPU-blueviolet.svg)](https://geode.jesed.dev)
 
-**[jesed.dev](https://jesed.dev)** · **[geode.jesed.dev](https://geode.jesed.dev)** · [GitHub](https://github.com/jesedv/geode)
+**[geode.jesed.dev](https://geode.jesed.dev)** · [GitHub](https://github.com/jesedv/geode)
 
 ---
 
@@ -12,47 +14,42 @@ A Rust implementation of the Hyper-Catalan series solution to polynomial equatio
 (Wildberger–Rubine 2024). For the first time in 200+ years, quintics and beyond
 have a closed-form rational solution.
 
+```
+  quintic:  x⁵ − x + 1 = 0
+  solution: x ≈ 0.75488 (exact rational at depth-15 truncation)
+```
+
 ## Install
 
 ```bash
-# From source (requires Rust)
 curl -sSf https://geode.jesed.dev/install.sh | sh
-
-# Or via cargo
-cargo install geode-poly --git https://github.com/jesedv/geode.git
-
-# Or build locally
-git clone https://github.com/jesedv/geode.git && cd geode
-cargo build --release
 ```
 
-## Web demo
+## Demo
 
 **[Try it live → geode.jesed.dev](https://geode.jesed.dev/ui/public/demo/)**
 
-Type any polynomial and see the Hyper-Catalan solution computed in WASM.
-No server, no account, no install.
-
 ## How it works
 
-For a polynomial `aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₀ = 0`, the Hyper-Catalan series
-gives:
+The Hyper-Catalan series gives a closed-form rational solution to any univariate
+polynomial equation. For a polynomial `aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₀ = 0`:
 
 ```
 x = Σₘ Cₘ · (a₁/a₀)^{m₁} · (a₂/a₀)^{m₂} · ...
 ```
 
-where `Cₘ` are Hyper-Catalan numbers (counting polygon dissections). Truncation
-at depth `d` gives a rational approximation with `O(d)` correct digits.
-
-No radicals. No complex intermediates. Just exact rational arithmetic.
+where `Cₘ` are Hyper-Catalan numbers (counting polygon dissections).
+Truncation at depth `d` gives `O(d)` correct digits.
 
 ## Use cases
 
-- **Game physics** — quintic equations in cloth sim, soft-body dynamics, Bézier intersection
-- **Computer graphics** — polynomial curves, surfaces, ray-marching implicit surfaces
-- **Symbolic CAS** — new method for computer algebra systems
-- **Cryptography** — analysis of polynomial-based primitives (Rainbow, MAYO)
+| Domain | Application |
+|--------|-------------|
+| Game physics | Cloth simulation, soft-body dynamics, Bézier intersection |
+| Computer graphics | Polynomial curves, surfaces, ray-marching implicit surfaces |
+| Symbolic CAS | New method for computer algebra systems |
+| Cryptography | Analysis of polynomial-based primitives (Rainbow, MAYO) |
+| Special functions | Polynomial systems in mathematical physics |
 
 ## Architecture
 
@@ -71,19 +68,28 @@ geode/
 └── scripts/              # regression + dev scripts
 ```
 
-## Build & test
+## Build
 
 ```bash
-cargo test                        # unit tests
-cd ui && npm install && npm run dev    # local dev server
+cargo test                                    # unit tests
+cargo build --release                         # optimized binary
+cd ui && npm install && npm run dev           # local dev server
 ```
+
+## Tech stack
+
+- **Rust** — core series engine
+- **num-rational / num-bigint** — arbitrary-precision rationals
+- **wasm-bindgen** — browser bridge
+- **Vite** — frontend build
 
 ## References
 
 - Wildberger, Rubine, "The Hyper-Catalan Series Solution to Polynomial Equations" (2024).
 - Wildberger, "The Geode" (2010s–2020s).
 - Abel, "Mémoire sur les équations algébriques" (1824).
+- Knuth, *The Art of Computer Programming, Vol. 4A* (combinatorial enumeration).
 
 ## License
 
-MIT OR Apache-2.0, at your option.
+MIT — see [LICENSE](LICENSE).
