@@ -1,0 +1,14 @@
+{
+  "name": "geode-wasm",
+  "version": "0.1.0",
+  "files": [
+    "geode_wasm_bg.wasm",
+    "geode_wasm.js",
+    "geode_wasm.d.ts"
+  ],
+  "module": "geode_wasm.js",
+  "types": "geode_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
