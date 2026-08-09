@@ -1,0 +1,27 @@
+# geode
+
+> Solve any polynomial with exact rational arithmetic — Hyper-Catalan series.
+
+geode is a Rust implementation of the Hyper-Catalan series solution to
+polynomial equations (Wildberger-Rubine 2024). For the first time in 200+ years,
+quintics and beyond have a closed-form rational solution.
+
+## Key concepts
+
+- **Hyper-Catalan series**: closed-form rational solution to any polynomial
+- **Exact rational arithmetic**: BigInt coefficients, no floating point
+- **Truncation depth**: configurable precision
+- **WASM**: runs in the browser, no server needed
+
+## Use cases
+
+- Game physics: cloth simulation, Bézier intersection
+- Computer graphics: polynomial surfaces, ray-marching
+- Symbolic CAS: new method for computer algebra
+- Cryptography: polynomial-based primitives analysis
+
+## Links
+
+- GitHub: https://github.com/jesedv/geode
+- Demo: https://geode.jesed.dev/ui/public/demo/
+- Math: https://github.com/jesedv/geode/blob/main/docs/math.md
